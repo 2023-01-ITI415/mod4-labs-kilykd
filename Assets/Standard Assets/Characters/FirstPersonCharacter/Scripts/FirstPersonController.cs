@@ -2,7 +2,9 @@ using System;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 using UnityStandardAssets.Utility;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using TMPro;
 
 namespace UnityStandardAssets.Characters.FirstPerson
 {
@@ -27,6 +29,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         [SerializeField] private AudioClip[] m_FootstepSounds;    // an array of footstep sounds that will be randomly selected from.
         [SerializeField] private AudioClip m_JumpSound;           // the sound played when character leaves the ground.
         [SerializeField] private AudioClip m_LandSound;           // the sound played when character touches back on ground.
+        [SerializeField] private AudioClip m_PickupSound;           // the sound played when character collects a pickup.
 
         private Camera m_Camera;
         private bool m_Jump;
@@ -42,6 +45,13 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_Jumping;
         private AudioSource m_AudioSource;
 
+        public Timer timer;
+
+        //count for pickup score
+        private int count;
+        public Text countText;
+        public Text winText;
+
         // Use this for initialization
         private void Start()
         {
@@ -55,6 +65,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Jumping = false;
             m_AudioSource = GetComponent<AudioSource>();
 			m_MouseLook.Init(transform , m_Camera.transform);
+            count = 0;
+            countText.text = "Count: " + count.ToString ();
+            winText.gameObject.SetActive(false);
         }
 
 
@@ -81,6 +94,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
 
             m_PreviouslyGrounded = m_CharacterController.isGrounded;
+
+            if(count == 5)
+            {
+                winText.gameObject.SetActive(true);
+                timer.TimerEnabled = false;
+            }
         }
 
 
@@ -141,6 +160,12 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 
+        private void PlayPickupSound()
+        {
+            m_AudioSource.clip = m_PickupSound;
+            m_AudioSource.Play();
+        }
+
         private void ProgressStepCycle(float speed)
         {
             if (m_CharacterController.velocity.sqrMagnitude > 0 && (m_Input.x != 0 || m_Input.y != 0))
@@ -200,6 +225,17 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_Camera.transform.localPosition = newCameraPosition;
         }
 
+        void OnTriggerEnter(Collider other)
+        {
+            if(other.gameObject.CompareTag("Pick Up"))
+            {
+                other.gameObject.SetActive (false);
+                count++;
+                countText.text = "Count: " + count.ToString ();
+                PlayPickupSound();
+            }
+        }
+
 
         private void GetInput(out float speed)
         {
@@ -255,5 +291,6 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             body.AddForceAtPosition(m_CharacterController.velocity*0.1f, hit.point, ForceMode.Impulse);
         }
+
     }
 }
