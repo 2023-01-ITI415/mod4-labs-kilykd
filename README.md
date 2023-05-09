@@ -1,13 +1,3 @@
-# 09-14-module3-SNAPS-Base
-This project will house scenes for level design, interiors and exteriors, lighting, audio and particle systems,
+Prototype 4 Final Project
 
-## Scene List
-- MainMenu - provide access to other scenes
-- Probuilder - basic use of probuilder to get comfortable with core functions
-- Snaps - using Modern Office and Sci-Fi Industrial props and structure for level creation
-- Terrain - exterior level modeling, texturing
-- Lighting-direct - experiments with direct lighting types
-- Lighting-indirect - experiments with indirect lighting and lightmap baking
-- Audio - experiments with 2D and 3D audio
-- Particle systems - everything that looks cool that isn't geometry or texture
-- Prototype 3 - Bringing it all together in a small exploration/collection game
+My goal for this environment was to make the player feel like they were a tiny action figure in a normal(human) sized kitchen. I have fond memories of playing some shooter game as a kid where you played as the green plastic army guys, and one of the levels was in a kitchen where everything was massive compared to you. I wanted capture this sort of feeling by making a large kitchen environment where the player is very small and is able to run and jump on the counters, fridge, etc. The goal is for the player to collect all five golden pepper mills. While some of them are tricky to get to, they are all possible to collect. I do not know why, but the footstep audio is very weird, and to audio for picking up the collectables only plays sometimes. After you spend some time looking around, there is also a stopwatch to see how fast you can collect all five pepper mills. Esc back to the main menu to restart the timer and see how fast you can collect all 5. My best time is 29.50. Good luck!
